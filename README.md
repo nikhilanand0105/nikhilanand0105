@@ -18,7 +18,7 @@
 
 ### Executive Overview
 
-I am a software engineer focused on building robust applied AI/ML systems, distributed backends, and reliable developer tooling. My work centers on turning complex technical challenges into verifiable, well-tested software—ranging from closed-loop explainable AI (XAI) pipelines and OOXML document parsing engines to role-based infrastructure access governance.
+I am a software engineer focused on building robust applied AI/ML systems, distributed backends, and reliable developer tooling across **Python, C++, Go, Java, Kotlin, TypeScript, and JavaScript**. My work centers on turning complex technical challenges into verifiable, well-tested software—ranging from closed-loop explainable AI (XAI) pipelines and high-speed C++ orderbook matching engines to Go sandbox execution runtimes and OOXML document parsing systems.
 
 In open source, I value disciplined upstream collaboration: reproducing edge cases, constructing deterministic regression test fixtures, and submitting focused changes to established codebases such as [TypeCode](https://github.com/aboutcode-org/typecode).
 
@@ -27,9 +27,10 @@ In open source, I value disciplined upstream collaboration: reproducing edge cas
 ### Core Technical Focus
 
 - **Applied AI &amp; Machine Learning** — Explainable AI (Grad-CAM, TreeSHAP, perturbation sensitivity), computer vision for defect inspection, and verifiable LLM evaluation harnesses.
+- **Systems &amp; High-Performance Computing** — Sub-microsecond Level-2 limit orderbook processing (C++17), cryptographic signature pipelines (RFC HMAC-SHA256), and concurrent code execution microservices (Go).
 - **Backend &amp; Distributed Systems** — High-concurrency RESTful and asynchronous services, task queue architectures (Celery/RabbitMQ/Redis), and ACID-compliant relational schemas.
-- **Systems &amp; Security Engineering** — Envelope encryption (AES-CBC KEK/DEK), SSH CA trust models (`TrustedUserCAKeys`), role-based access control (RBAC), and automated infrastructure provisioning.
-- **Developer Tooling &amp; Reliability** — Deterministic test suites (pytest/Playwright), CI/CD workflows (GitHub Actions), AST/lexing grammar extensions, and strict data-retention lifecycle management.
+- **Systems Security &amp; Infrastructure** — Envelope encryption (AES-CBC KEK/DEK), SSH CA trust models (`TrustedUserCAKeys`), role-based access control (RBAC), and automated cloud provisioning.
+- **Developer Tooling &amp; Reliability** — Deterministic test suites (pytest/Playwright/CTest/Go test), CI/CD workflows (GitHub Actions), AST/lexing grammar extensions, and strict data retention lifecycles.
 
 ```mermaid
 flowchart LR
@@ -40,9 +41,10 @@ flowchart LR
     end
 
     subgraph S2["Systems & Backend"]
+        D["Delta\n(C++17 L2 Orderbook)"]
+        C["Code Runner\n(Go Sandbox Service)"]
         W["Writelynx\n(Doc Integrity / FastAPI)"]
         S["SSH-Manager\n(RBAC / Ansible / AES)"]
-        J["JARVIS\n(On-Device Android Agent)"]
     end
 
     subgraph S3["Upstream Open Source"]
@@ -63,6 +65,8 @@ flowchart LR
 │ System                   │ Focus                               │ Verification          │
 ├──────────────────────────┼─────────────────────────────────────┼───────────────────────┤
 │ QuantLensAi              │ Closed-Loop Explainable AI Platform │ 30 Invariants + CI    │
+│ Delta                    │ High-Performance C++17 L2 Orderbook │ CTest + NIST Vectors  │
+│ Code-Runner-as-a-Service │ Concurrent Go Execution Sandbox     │ Context Timeouts + CI │
 │ Writelynx                │ Document Integrity & Revision Engine│ 20-Step E2E + Pytest  │
 │ SSH-Manager              │ Fleet Access & Key Provisioning     │ Model & ACL Test Suite│
 │ ReVexis                  │ Semiconductor Defect Restoration    │ Empirical Edge Metric │
@@ -82,7 +86,28 @@ flowchart LR
   - Automated cloud provisioning using AWS CloudFormation, EC2 systemd daemon management, and Nginx reverse proxy.
 - **Tech Stack:** Python 3.11, PyTorch (1D-CNN, MLP), XGBoost, SHAP, NumPy, Pandas, MongoDB, Docker, AWS (EC2/CloudFormation).
 
-#### 2. [Writelynx](https://github.com/nikhilanand0105/writelynx) — Academic Document Integrity &amp; Revision Platform
+#### 2. [Delta](https://github.com/nikhilanand0105/Delta) — High-Performance C++17 Trading &amp; Orderbook Engine
+*Systems &amp; High-Frequency Trading Core Library*
+
+- **The Problem:** Market making and algorithmic arbitrage require sub-microsecond limit orderbook processing and deterministic message authentication without heap allocations on hot paths.
+- **Architecture &amp; Decisions:**
+  - Built a high-performance **Level-2 Limit Orderbook (LOB)** with descending bid and ascending ask red-black tree indices, supporting $O(1)$ top-of-book retrieval and dynamic spread tracking.
+  - Developed a zero-external-dependency **RFC-compliant SHA-256 and HMAC-SHA256 signature engine** for Delta Exchange REST and WebSocket authentication.
+  - Enforced strict invariants through unit tests covering order insertion, level updates, order cancellation (`size == 0`), and NIST test vectors.
+- **Tech Stack:** C++17, Clang++, Make, CMake, CTest, Standard Library Algorithms.
+
+#### 3. [Code-Runner-as-a-Service](https://github.com/nikhilanand0105/Code-Runner-as-a-Service) — Concurrent Code Execution Sandbox
+*Cloud-Native Go Microservice*
+
+- **The Problem:** Running untrusted user code in web platforms requires strict memory limits, execution deadlines, and process sandboxing to prevent resource exhaustion and hanging workers.
+- **Architecture &amp; Decisions:**
+  - Implemented a concurrent execution engine in **Go 1.22** supporting Python, JavaScript, C++, Bash, and Go runtimes.
+  - Sandboxed execution via ephemeral isolated directories and `context.WithTimeout` deadline propagation.
+  - Output stream capture with a 1 MB hard buffer cap to prevent runaway log allocation.
+  - Packaged in a multi-stage Docker container with multi-runtime base image and GitHub Actions CI.
+- **Tech Stack:** Go 1.22, Docker, Linux cgroups/subprocesses, HTTP REST API, GitHub Actions CI.
+
+#### 4. [Writelynx](https://github.com/nikhilanand0105/writelynx) — Academic Document Integrity &amp; Revision Platform
 *Production-Grade Distributed Web Application*
 
 - **The Problem:** Automated manuscript revision tools frequently damage complex OpenXML formatting (tables, cross-references, equations) or upload unencrypted drafts to third-party APIs without data retention guarantees.
@@ -93,7 +118,7 @@ flowchart LR
   - Verified through a 20-step end-to-end integration test suite, Alembic schema migrations, and Playwright UI tests.
 - **Tech Stack:** FastAPI, Python, React 18, TypeScript, Celery, Redis, PostgreSQL, Alembic, Caddy, Tailwind CSS, Docker.
 
-#### 3. [SSH-Manager](https://github.com/nikhilanand0105/SSH-Manager) — Centralized Access Governance &amp; Key Provisioning
+#### 5. [SSH-Manager](https://github.com/nikhilanand0105/SSH-Manager) — Centralized Access Governance &amp; Key Provisioning
 *Distributed Systems &amp; Infrastructure Security Platform*
 
 - **The Problem:** Dispersed SSH keys across heterogeneous server fleets lead to credential sprawl, stale authorized keys, and lack of verifiable audit trails during access revocation.
@@ -104,7 +129,7 @@ flowchart LR
   - Comprehensive automated test coverage including unit tests for ACL models, session lifecycles, and controller integration.
 - **Tech Stack:** Python, Flask, Celery, RabbitMQ, PostgreSQL, SQLAlchemy, Ansible, Cryptography (AES-CBC), Pytest.
 
-#### 4. [ReVexis](https://github.com/nikhilanand0105/ReVexis) — Semiconductor Defect-Inspection Restoration Pipeline
+#### 6. [ReVexis](https://github.com/nikhilanand0105/ReVexis) — Semiconductor Defect-Inspection Restoration Pipeline
 *Scientific Computer Vision &amp; Deep Learning System (KLA i4C Hackathon Finalist)*
 
 - **The Problem:** Standard denoising filters blur sub-micron structural edges in high-noise scanning electron microscopy (SEM) and optical wafer inspection, creating false negatives in automated defect detection.
@@ -114,7 +139,7 @@ flowchart LR
   - Integrated a Next.js inspection dashboard with a FastAPI inference backend for real-time before/after defect review.
 - **Tech Stack:** PyTorch, Python, OpenCV, NumPy, FastAPI, Next.js, TypeScript, Tailwind CSS.
 
-#### 5. [FreightTiger AI Assistant (`caseStudy`)](https://github.com/nikhilanand0105/caseStudy) — Offline LLM Logistics Reasoning &amp; Eval Harness
+#### 7. [FreightTiger AI Assistant (`caseStudy`)](https://github.com/nikhilanand0105/caseStudy) — Offline LLM Logistics Reasoning &amp; Eval Harness
 *Applied LLM Engineering &amp; Verification Suite*
 
 - **The Problem:** Unchecked generative language models hallucinate shipment states and create compliance liabilities when answering operational logistics queries.
@@ -124,7 +149,7 @@ flowchart LR
   - Engineered an automated evaluation harness with mutation testing, repeated-run reproducibility tracking, and token cost telemetry.
 - **Tech Stack:** Python, Ollama, Pydantic, Pandas, Pytest, JSON Schema, Regex.
 
-#### 6. [JARVIS Mobile Agent (`jarvis-baba`)](https://github.com/nikhilanand0105/jarvis-baba) — On-Device Android Autonomous Agent
+#### 8. [JARVIS Mobile Agent (`jarvis-baba`)](https://github.com/nikhilanand0105/jarvis-baba) — On-Device Android Autonomous Agent
 *Mobile Systems Engineering &amp; Autonomous Interaction Framework*
 
 - **The Problem:** Automating complex, multi-step actions on mobile platforms typically requires brittle UI coordinate hacks that break with minor layout or resolution changes.
@@ -151,12 +176,13 @@ I treat open-source contributions as an exercise in engineering discipline: unde
 
 | Domain | Technologies &amp; Tooling |
 |---|---|
-| **Languages** | Python, C++, Java, Kotlin, TypeScript, JavaScript, SQL, Bash |
+| **Languages** | Python, C++, Go, Java, Kotlin, TypeScript, JavaScript, SQL, Bash |
 | **Applied AI &amp; ML** | PyTorch, XGBoost, Scikit-learn, OpenCV, 1D Grad-CAM, SHAP, Ollama, Hugging Face |
+| **Systems &amp; High-Performance** | C++17, Go (Golang), Multithreading, In-Memory Orderbooks, HMAC Signatures, Subprocess Sandboxing |
 | **Backend &amp; Distributed** | FastAPI, Flask, Celery, RabbitMQ, Redis, PostgreSQL, MongoDB, SQLAlchemy, Alembic |
 | **Infrastructure &amp; DevOps**| Docker, Docker Compose, AWS (EC2, CloudFormation, CloudWatch), Caddy, Nginx, Linux (systemd), Git, GitHub Actions |
-| **Frontend &amp; Mobile** | React 18, Next.js, TypeScript, Tailwind CSS, Android SDK, Jetpack Compose |
-| **Testing &amp; Quality** | Pytest, Playwright, Ruff, Flake8, Pre-commit hooks, Unit &amp; Integration Testing |
+| **Frontend &amp; Mobile** | React 18, Next.js, TypeScript, JavaScript (ES2024), Tailwind CSS, Android SDK, Jetpack Compose |
+| **Testing &amp; Quality** | Pytest, Playwright, CTest, Go testing, Ruff, Flake8, Pre-commit hooks |
 
 ---
 
